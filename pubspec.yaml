@@ -1,0 +1,66 @@
+
+name: tailorpro_clean
+description: "TailorPro - Tailor Management Application using Clean Architecture."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management - BLoC
+  flutter_bloc: ^9.1.1
+
+  # Dependency Injection
+  get_it: ^8.0.3
+
+  # Navigation
+  go_router: ^16.0.0
+
+  # Entity and State Equality
+  equatable: ^2.0.7
+
+  # Modern Google Fonts
+  google_fonts: ^6.2.1
+
+  # Local Storage
+  shared_preferences: ^2.5.3
+
+  # Subscription QR Code Payment
+  qr_flutter: ^4.1.0
+
+  # Date and Currency Formatting
+  intl: ^0.20.2
+
+  # Cupertino Icons
+  cupertino_icons: ^1.0.8
+
+  # ==========================================================
+  # INVOICE PDF GENERATION
+  # ==========================================================
+
+  # Create PDF documents
+  pdf: ^3.11.3
+
+  # Preview, print and share PDF
+  printing: ^5.14.2
+
+  # Save PDF to application documents directory
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # PDF fonts
+  assets:
+    - assets/fonts/NotoSans-Regular.ttf
