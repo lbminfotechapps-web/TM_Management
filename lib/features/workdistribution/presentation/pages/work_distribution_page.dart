@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tailorpro_clean/core/router/app_routes.dart';
 import 'package:intl/intl.dart';
+import 'team_work_list_page.dart';
 
 class WorkDistributionPage extends StatefulWidget {
   const WorkDistributionPage({super.key});
@@ -336,12 +337,16 @@ class _WorkDistributionPageState
           Row(
             children: [
               Expanded(
-                child: _statTile(
-                  'Members',
-                  '$_totalMembers',
-                  Icons.groups_rounded,
-                  const Color(0xFFF1E9DD),
-                  _brown,
+                child: InkWell(
+                  onTap: _openTeamWorkList,
+                  borderRadius: BorderRadius.circular(13),
+                  child: _statTile(
+                    'Members',
+                    '$_totalMembers',
+                    Icons.groups_rounded,
+                    const Color(0xFFF1E9DD),
+                    _brown,
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -675,7 +680,7 @@ class _WorkDistributionPageState
       padding: const EdgeInsets.all(11),
       child: InkWell(
         onTap: () {
-          _showMemberDetails(member);
+          _openTeamWorkList();
         },
         borderRadius: BorderRadius.circular(12),
         child: Row(
@@ -797,169 +802,11 @@ class _WorkDistributionPageState
   // MEMBER DETAILS
   // ===========================================
 
-  void _showMemberDetails(TeamMember member) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (sheetContext) {
-        final progress = member.total == 0
-            ? 0.0
-            : member.completed / member.total;
-
-        return Container(
-          padding: EdgeInsets.fromLTRB(
-            20,
-            15,
-            20,
-            MediaQuery.of(sheetContext).padding.bottom + 24,
-          ),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(25),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 38,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD7D7D7),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: member.avatarColor,
-                    child: Text(
-                      _initials(member.name),
-                      style: const TextStyle(
-                        color: _brown,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          member.name,
-                          style: const TextStyle(
-                            color: _brown,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        Text(
-                          member.role,
-                          style: const TextStyle(
-                            color: _muted,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  _statusChip(member.present),
-                ],
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Work Summary',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: _brown,
-                ),
-              ),
-              const SizedBox(height: 13),
-              _detailRow(
-                'Assigned Work',
-                '${member.total}',
-              ),
-              const Divider(height: 22),
-              _detailRow(
-                'Completed Work',
-                '${member.completed}',
-              ),
-              const Divider(height: 22),
-              _detailRow(
-                'Pending Work',
-                '${member.total - member.completed}',
-              ),
-              const SizedBox(height: 15),
-              LinearProgressIndicator(
-                value: progress,
-                minHeight: 8,
-                borderRadius: BorderRadius.circular(10),
-                backgroundColor: const Color(0xFFF1E8DB),
-                color: _green,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${(progress * 100).round()}% completed',
-                style: const TextStyle(
-                  color: _muted,
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 22),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                  onPressed: () =>
-                      Navigator.pop(sheetContext),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _brown,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('Close'),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _detailRow(String title, String value) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 12,
-              color: _muted,
-            ),
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 13,
-            color: _brown,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ],
+  void _openTeamWorkList() {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => const TeamWorkListPage(),
+      ),
     );
   }
 
